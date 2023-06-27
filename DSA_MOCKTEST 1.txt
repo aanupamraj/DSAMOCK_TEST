@@ -1,0 +1,109 @@
+public class Queue {
+
+    private Node front;  // Reference to the front of the queue
+    private Node rear;   // Reference to the rear of the queue
+
+    // Constructor
+    public Queue() {
+        front = null;
+        rear = null;
+    }
+
+    // Node class representing individual elements of the queue
+    private class Node {
+        int data;
+        Node next;
+
+        Node(int value) {
+            data = value;
+            next = null;
+        }
+    }
+
+    // Check if the queue is empty
+    public boolean isEmpty() {
+        return front == null;
+    }
+
+    // Add an element to the rear of the queue (enqueue)
+    public void enqueue(int value) {
+        Node newNode = new Node(value);
+
+        if (isEmpty()) {
+            front = newNode;
+            rear = newNode;
+        } else {
+            rear.next = newNode;
+            rear = newNode;
+        }
+
+        System.out.println("Enqueued " + value + " to the queue.");
+    }
+
+    // Remove and return the element at the front of the queue (dequeue)
+    public int dequeue() {
+        if (isEmpty()) {
+            System.out.println("Queue is empty. Cannot dequeue element.");
+            return -1; // Return -1 to indicate an empty queue or error condition
+        }
+
+        int dequeuedValue = front.data;
+        front = front.next;
+
+        // If the front becomes null after dequeue, update the rear to null as well
+        if (front == null) {
+            rear = null;
+        }
+
+        return dequeuedValue;
+    }
+
+    // Get the element at the front of the queue without removing it
+    public int peek() {
+        if (isEmpty()) {
+            System.out.println("Queue is empty. No front element.");
+            return -1; // Return -1 to indicate an empty queue or error condition
+        }
+
+        return front.data;
+    }
+
+    // Get the size of the queue
+    public int size() {
+        int count = 0;
+        Node current = front;
+
+        while (current != null) {
+            count++;
+            current = current.next;
+        }
+
+        return count;
+    }
+
+    // Clear the queue (remove all elements)
+    public void clear() {
+        front = null;
+        rear = null;
+    }
+}
+
+
+
+
+Queue queue = new Queue();
+
+queue.enqueue(10);
+queue.enqueue(20);
+queue.enqueue(30);
+
+System.out.println("Front element: " + queue.peek()); // Output: 10
+
+int dequeuedElement = queue.dequeue();
+System.out.println("Dequeued element: " + dequeuedElement); // Output: 10
+
+System.out.println("Is queue empty? " + queue.isEmpty()); // Output: false
+
+queue.clear();
+
+System.out.println("Is queue empty? " + queue.isEmpty()); // Output: true
